@@ -236,7 +236,7 @@ task thing(type: SomeTask) {
 
         then:
         failure.assertHasDescription("Execution failed for task ':thing'.")
-        failure.assertHasCause("Could not calculate the value of task ':thing' property 'prop'.")
+        failure.assertHasCause("Failed to calculate the value of task ':thing' property 'prop'.")
         failure.assertHasCause("broken")
     }
 
