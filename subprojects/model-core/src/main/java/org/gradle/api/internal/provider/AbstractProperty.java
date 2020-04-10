@@ -300,7 +300,7 @@ public abstract class AbstractProperty<T, S extends ValueSupplier> extends Abstr
     }
 
     @Contextual
-    private static class PropertyQueryException extends RuntimeException {
+    public static class PropertyQueryException extends RuntimeException {
         public PropertyQueryException(String message, Throwable cause) {
             super(message, cause);
         }
