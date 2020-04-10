@@ -2337,13 +2337,13 @@ The value of this provider is derived from:
         }
 
         @Override
-        protected Value<? extends T> calculateOwnValue() {
+        protected Value<? extends T> calculateOwnValue(ValueConsumer consumer) {
             return Value.missing()
         }
 
         @Override
-        Value<? extends T> calculateValue() {
-            return Value.missing().pushWhenMissing(displayName)
+        protected DisplayName getDeclaredDisplayName() {
+            return displayName
         }
     }
 

@@ -153,7 +153,7 @@ abstract class CollectionPropertySpec<C extends Collection<String>> extends Prop
     def "can set untyped from provider"() {
         def provider = Stub(ProviderInternal)
         provider.type >> null
-        provider.calculateValue() >>> [["1"], ["2"]].collect { ValueSupplier.Value.of(it) }
+        provider.calculateValue(_) >>> [["1"], ["2"]].collect { ValueSupplier.Value.of(it) }
 
         expect:
         property.setFromAnyValue(provider)
@@ -183,8 +183,8 @@ abstract class CollectionPropertySpec<C extends Collection<String>> extends Prop
     def "queries underlying provider for every call to get()"() {
         def provider = Stub(ProviderInternal)
         provider.type >> List
-        provider.calculateValue() >>> [["123"], ["abc"]].collect { ValueSupplier.Value.of(it) }
-        provider.present >> true
+        provider.calculateValue(_) >>> [["123"], ["abc"]].collect { ValueSupplier.Value.of(it) }
+        provider.calculatePresence(_) >> true
 
         expect:
         property.set(provider)
@@ -287,8 +287,8 @@ abstract class CollectionPropertySpec<C extends Collection<String>> extends Prop
 
     def "queries values of provider on every call to get()"() {
         def provider = Stub(ProviderInternal)
-        _ * provider.present >> true
-        _ * provider.calculateValue() >>> [["abc"], ["def"]].collect { ValueSupplier.Value.of(it) }
+        _ * provider.calculatePresence(_) >> true
+        _ * provider.calculateValue(_) >>> [["abc"], ["def"]].collect { ValueSupplier.Value.of(it) }
 
         expect:
         property.addAll(provider)
@@ -352,27 +352,27 @@ abstract class CollectionPropertySpec<C extends Collection<String>> extends Prop
         property.present
 
         then:
-        1 * valueProvider.present >> true
-        1 * addProvider.present >> true
-        1 * addAllProvider.present >> true
+        1 * valueProvider.calculatePresence(_) >> true
+        1 * addProvider.calculatePresence(_) >> true
+        1 * addAllProvider.calculatePresence(_) >> true
         0 * _
 
         when:
         property.get()
 
         then:
-        1 * valueProvider.calculateValue() >> ValueSupplier.Value.of(["1"])
-        1 * addProvider.calculateValue() >> ValueSupplier.Value.of("2")
-        1 * addAllProvider.calculateValue() >> ValueSupplier.Value.of(["3"])
+        1 * valueProvider.calculateValue(_) >> ValueSupplier.Value.of(["1"])
+        1 * addProvider.calculateValue(_) >> ValueSupplier.Value.of("2")
+        1 * addAllProvider.calculateValue(_) >> ValueSupplier.Value.of(["3"])
         0 * _
 
         when:
         property.getOrNull()
 
         then:
-        1 * valueProvider.calculateValue() >> ValueSupplier.Value.of(["1"])
-        1 * addProvider.calculateValue() >> ValueSupplier.Value.of("2")
-        1 * addAllProvider.calculateValue() >> ValueSupplier.Value.of(["3"])
+        1 * valueProvider.calculateValue(_) >> ValueSupplier.Value.of(["1"])
+        1 * addProvider.calculateValue(_) >> ValueSupplier.Value.of("2")
+        1 * addAllProvider.calculateValue(_) >> ValueSupplier.Value.of(["3"])
         0 * _
     }
 

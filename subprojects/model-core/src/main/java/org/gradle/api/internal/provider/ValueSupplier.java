@@ -34,7 +34,11 @@ public interface ValueSupplier {
      */
     ValueProducer getProducer();
 
-    boolean isPresent();
+    boolean calculatePresence(ValueConsumer consumer);
+
+    enum ValueConsumer {
+        Strict, Lenient
+    }
 
     /**
      * Carries information about the producer of a value.
