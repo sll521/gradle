@@ -54,6 +54,9 @@ public class Providers {
     }
 
     public static <T> ProviderInternal<T> of(T value) {
+        if (value == null) {
+            throw new IllegalArgumentException();
+        }
         return new FixedValueProvider<>(value);
     }
 
