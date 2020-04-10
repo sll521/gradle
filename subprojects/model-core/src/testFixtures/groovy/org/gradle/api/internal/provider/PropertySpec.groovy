@@ -1861,7 +1861,7 @@ The value of this property is derived from:
         property.finalizeValueOnRead()
 
         then:
-        noExceptionThrown()
+        0 * _
 
         when:
         def value = property.orNull
@@ -1883,7 +1883,7 @@ The value of this property is derived from:
         property.disallowChanges()
 
         then:
-        noExceptionThrown()
+        0 * _
 
         when:
         def value = property.orNull
